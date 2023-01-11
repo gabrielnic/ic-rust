@@ -1,8 +1,8 @@
 {
   "canisters": {
-    "counter": {
-      "candid": "counter.did",
-      "package": "counter",
+    "main": {
+      "candid": "backend/candid/main.did",
+      "package": "main",
       "type": "rust"
     }
   },

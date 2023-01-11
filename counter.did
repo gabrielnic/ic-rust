@@ -1,6 +1,0 @@
-service : {
-  get : () -> (nat) query;
-  get_test : () -> (text) query;
-  inc : () -> ();
-  set : (nat) -> ();
-}

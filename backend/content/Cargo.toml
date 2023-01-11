@@ -1,0 +1,31 @@
+[package]
+name = "content"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "src/lib.rs"
+crate-type = ["cdylib"]
+
+
+[dependencies]
+candid = "0.7.14"
+ic-cdk = "0.5.2"
+ic-cdk-macros = "0.5.2"
+ic-stable-structures = "0.3.0"
+serde_cbor = "0.10"
+serde = {version = "1.0", features = ["derive"]}
+serde_json = {version = "1.0"}
+ulid = "1.0.0"
+getrandom = { version = "0.2", features = ["js"] }
+validator = { version = "0.12", features = ["derive"] }
+
+[[test]]
+name="generate"
+path = "src/lib.rs"
+
+[profile.release]
+lto = true
+opt-level = 'z'
+
+

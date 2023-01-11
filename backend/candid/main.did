@@ -1,0 +1,11 @@
+type Entity = variant {
+  User : User;
+  UserAddress : UserAddress;
+  UserProfile : UserProfile;
+};
+type Result = variant { Ok : vec nat8; Err : bool };
+type Tag = variant { user; user_address; user_profile };
+type User = record { "principal" : principal };
+type UserAddress = record { uid : text; first_line : text };
+type UserProfile = record { age : nat8; uid : text; name : text };
+service : { insert : (text, Entity) -> (); list : (Tag) -> (Result) query }
