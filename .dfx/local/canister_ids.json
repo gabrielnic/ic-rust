@@ -1,5 +1,14 @@
 {
-  "main": {
+  "__Candid_UI": {
     "local": "rkp4c-7iaaa-aaaaa-aaaca-cai"
+  },
+  "content": {
+    "local": "rrkah-fqaaa-aaaaa-aaaaq-cai"
+  },
+  "main": {
+    "local": "ryjl3-tyaaa-aaaaa-aaaba-cai"
+  },
+  "player": {
+    "local": "r7inp-6aaaa-aaaaa-aaabq-cai"
   }
 }

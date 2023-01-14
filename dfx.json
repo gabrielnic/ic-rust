@@ -1,9 +1,22 @@
 {
   "canisters": {
     "main": {
+      "type": "custom",
       "candid": "backend/candid/main.did",
-      "package": "main",
-      "type": "rust"
+      "build": "bash -c './scripts/rust_build.sh main'",
+      "wasm": ".dfx/local/canisters/main/main.wasm.gz"
+    },
+    "content": {
+      "type": "custom",
+      "candid": "backend/candid/content.did",
+      "build": "bash -c './scripts/rust_build.sh content'",
+      "wasm": ".dfx/local/canisters/content/content.wasm.gz"
+    },
+    "player": {
+      "type": "custom",
+      "candid": "backend/candid/player.did",
+      "build": "bash -c './scripts/rust_build.sh player'",
+      "wasm": ".dfx/local/canisters/player/player.wasm.gz"
     }
   },
   "defaults": {

@@ -1,0 +1,1 @@
+pub const DEFAULT_CYCLES: u64 = 25_000_000_000_000;

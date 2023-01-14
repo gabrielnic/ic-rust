@@ -1,30 +1,24 @@
-use candid::{CandidType, Deserialize, candid_method};
+use candid::{CandidType, Decode, Deserialize, Encode, candid_method};
+use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
+use ic_stable_structures::{BoundedStorable, DefaultMemoryImpl, StableBTreeMap, Storable};
+use uuid::Uuid;
 use std::collections::HashMap;
-use std::{cell::RefCell};
+use std::{borrow::Cow, cell::RefCell};
 use serde::{de::DeserializeOwned, Serialize};
 use serde_cbor::Error;
 use ic_cdk::export::{ Principal };
-use ulid::Ulid;
+use shared::{
+  serialize, deserialize
+};
 
 use ic_cdk_macros::*;
 
+type Memory = VirtualMemory<DefaultMemoryImpl>;
 
-pub fn serialize<T: Serialize>(data: &T) -> Result<Vec<u8>, Error> {
-  let bytes = serde_cbor::to_vec(data);
-  match bytes {
-      Err(err) => Err(err),
-      Ok(_bytes) => Ok(_bytes),
-  }
-}
 
-pub fn deserialize<T: DeserializeOwned>(data: Vec<u8>) -> Result<T, Error> {
-  let data = serde_cbor::from_slice(data.as_slice());
-  match data {
-      Err(err) => Err(err),
-      Ok(_data) => Ok(_data),
-  }
-}
+const MAX_VALUE_SIZE: u32 = 100;
 
+#[derive(CandidType, Deserialize)]
 
 enum Tag {
   user,
@@ -120,7 +114,7 @@ enum Entity {
 #[update]
 #[candid_method(update)]
 fn insert(key: String, value: Entity) -> () {
-  let id = Ulid::new().to_string();
+  let id = Uuid::new_v4().to_string();
   STORE.with(|p| {
     match value {
       Entity::User(_user) => {
@@ -152,4 +146,17 @@ fn list(t: Tag) -> Result<Vec<u8>, bool> {
       Ok(serialize(&h).unwrap_or(vec![]))
     }
   }
+}
+
+#[test]
+pub fn generate_candid() -> () {
+  use std::env;
+  use std::fs::write;
+  use std::path::PathBuf;
+
+  candid::export_service!();
+ 
+  let dir = PathBuf::from(env::var("CARGO_MANIFEST_DIR").unwrap());
+  let dir = dir.parent().unwrap().join("candid");
+  write(dir.join(format!("content.did")), __export_service()).expect("Write failed.");
 }

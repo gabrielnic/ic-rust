@@ -1,18 +1,11 @@
-type ApiError = record { err_type : ApiErrorType; err_msg : text };
-type ApiErrorType = variant { NotFound; Unauthorized; BadRequest };
 type Entity = variant {
   User : User;
   UserAddress : UserAddress;
   UserProfile : UserProfile;
 };
 type Result = variant { Ok : vec nat8; Err : bool };
-type Result_1 = variant { Ok; Err : ApiError };
 type Tag = variant { user; user_address; user_profile };
 type User = record { "principal" : principal };
 type UserAddress = record { uid : text; first_line : text };
 type UserProfile = record { age : nat8; uid : text; name : text };
-service : {
-  insert : (text, Entity) -> ();
-  list : (Tag) -> (Result) query;
-  spawn_new_bucket : () -> (Result_1) query;
-}
+service : { insert : (text, Entity) -> (); list : (Tag) -> (Result) query }

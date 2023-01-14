@@ -1,10 +1,5 @@
 [workspace]
 
 members = [
-    "backend/main",
-    "backend/shared",
+    "backend",
 ]
-
-
-
-
